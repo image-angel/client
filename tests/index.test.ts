@@ -63,6 +63,22 @@ describe("Testing ImageAngel Client", () => {
     });
   });
 
+  test("Parse URL", async () => {
+    // Parse and decrypt the watermarking URL and verify the contents.
+    // This can only be done by someone who knows the encryption key.
+    const decrypted = await client.decryptUrl("https://api.imageangel.co.uk/wm/name.jpeg?u=auxinfo&s=AgV4N8bbK90%2B3KHWgsZCiCTeKgizLJK6zs14kpMSL3lTKJgAkwAEAAFhAAJ2MAAVYXdzLWNyeXB0by1wdWJsaWMta2V5AERBZ1RuYjBxSmNlSWtyVzdXcXNVSXpnb0VzYUUvUXR5eDJXMjFNWTgzSXExR0dJdndSa0I1UVJsYk9kR3gvSW5BSlE9PQABdQAgYzQ5OWQzMmQ3ZjMzNjUyNzczYjc3MzBlZTZlZTAxNTAAAXcAAzRkMgABAAtpbWFnZS1hbmdlbAAcdGVzdC1rZXkAAACAAAAADMSNMOYUihWGY2NGPgAwr6ouO0Kcx4xashgrFtvVhFPrzbOS%2BD6AWDY7zGqfwieirw1VV4RtWVsNmELdHz3WAgAAEAAl7DavKiv3EC4GcgqNo1vc2k%2BMz2LHS4FSzS%2FCj2vsVgtthZUihpB5FHpGUTBz1Oz%2F%2F%2F%2F%2FAAAAAQAAAAAAAAAAAAAAAQAAACYO4KKUszW8WlX3o7OyebTGOw2zZPjBwLqqwgmVDf7CDnF%2BfmzeM11sm6%2FiljDQEpbfxsRcRucAZjBkAjAQ9ie2Gr9zCKRQaFWUxsUUs2PZHYsShw4NgoPfCvFi8pwhDaAlIVn4ZjRH7Ji4xYoCMDBevU2G0CHZMBG0qrNI8rVS5cL3tKPjJVvhvv%2FR1UK2hOAEitlo5qsE0olBWZ6vcQ%3D%3D");
+    expect(decrypted).toStrictEqual({
+      src: "http://my.files/secret𓆩♡𓆪.jpeg",
+      key: "test-key",
+      host: "https://api.imageangel.co.uk",
+      path: "/wm/name.jpeg",
+      watermark: 1234,
+      auxinfo: "auxinfo",
+      auxinfoMatches: true,
+      watermarkMethod: "v0",
+    });
+  });
+
   test("Detect Finds Watermark", async () => {
     // Mock the fetch function used to access the Image Angel API.
     const fetchMock = jest.spyOn(global, "fetch").mockImplementation(

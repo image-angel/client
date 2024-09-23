@@ -20,10 +20,10 @@ const client = new Client('my-key-name', API_KEY);
 To create an ImageAngel URL which can be given to users:
 ```javascript
 const urlString = await client.makeUrl(
-    'https://my.files/secret.jpeg', // URL for source image
-    'filename.jpeg',                // Filename to show the user
-    5678,                           // Watermark to embed
-    'OtherInfo'                     // Auxiliary information to include in URL
+    'https://my.files/secret.jpeg',   // Source URL
+    'filename.jpeg',                  // Filename to show the user
+    5678,                             // Watermark to embed
+    'OtherInfo'                       // Auxiliary information to include in URL
 );
 ```
 When accessed, this URL will serve a version of the image with the watermark.
@@ -37,9 +37,7 @@ if (results.watermark) {
 }
 ```
 If a leaked or inappropriately shared image is found by its owner,
-the watermark can be reas using this API. The image sharing platform can then determine details of the original downloader given the embedded watermark and take appropriate next steps.
-
-## Documentation
+the watermark can be read using this API. The image sharing platform can then determine details of the original downloader given the embedded watermark and take appropriate next steps.
 
 ## License
 
